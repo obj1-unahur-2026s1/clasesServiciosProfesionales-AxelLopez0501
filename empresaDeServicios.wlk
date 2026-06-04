@@ -37,4 +37,10 @@ class EmpresaDeServicios {
     method esDeGenteAcotada() {
         return listaProf.any({p => p.getProvs().size() > 3})
     }
+
+    // Etapa 2
+
+    method puedeSatisfacer(unSolicitante) {
+        return listaProf.any({p => unSolicitante.puedeSerAtendido(p)})
+    }
 }
