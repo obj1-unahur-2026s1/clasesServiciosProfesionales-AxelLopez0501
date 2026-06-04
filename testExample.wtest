@@ -1,9 +1,35 @@
-import example.pepita
+import empresaDeServicios.*
+import profesionales.*
 
-describe "group of tests for pepita" {
+describe "Grupo de test etapa 1" {
+  const uniSanMartin = new Universidad(prov="Buenos Aires", honoHora= 3500)
+  const uniRosario = new Universidad(prov="Santa Fe", honoHora= 2800)
+  const uniCorrientes = new Universidad(prov="Corrientes", honoHora= 4200)
+  const uniHurlingham = new Universidad(prov="Buenos Aires", honoHora= 8800)
 
-  test "pepita has initial energy" {
-    assert.equals(100, pepita.energy())
+  const juana = new ProfesionalVinculado(uni=uniRosario)
+  const melina = new ProfesionalDelLitoral(uni=uniCorrientes)
+  const rocio = new ProfesionalLibre(uni=uniHurlingham, honoHora= 5000, provs=["Santa Fe","Cordoba","Buenos Aires"])
+  const luciana = new ProfesionalLibre(uni=uniRosario, honoHora=3200,provs=["Santa Fe","Entre Rios"])
+
+  const empresaSA = new EmpresaDeServicios(honorarioRef=3500)
+
+  method initialize() {
+    empresaSA.contratar(juana)
+    empresaSA.contratar(luciana)
+    empresaSA.contratar(rocio)
+  }
+  test "profesionales caros" {
+    assert.equals([rocio],empresaSA.profesionalesCaros())
   }
 
+  test "universidades formadoras" {
+    assert.that(#{uniRosario,uniHurlingham} == empresaSA.universidadesFormadoras())
+  }
+
+  test "profesional mas barata" {
+    assert.equals(juana, empresaSA.profesionalMasBarato())
+  }
+
+  
 }
